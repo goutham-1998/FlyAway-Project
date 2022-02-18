@@ -1,0 +1,2 @@
+module javaasstproj.java {
+}

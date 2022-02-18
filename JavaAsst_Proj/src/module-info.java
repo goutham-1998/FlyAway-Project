@@ -1,0 +1,2 @@
+module JavaAsst_Proj {
+}
