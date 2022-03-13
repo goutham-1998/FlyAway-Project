@@ -7,32 +7,32 @@ import java.util.Scanner;
 
 public class LockedMe_Prototype {
 	
-	static String Dir;
-	File foldername;
+	public static String Dir;
+	File folder_name;
 	
 	//DIRECTORY
 	public LockedMe_Prototype()
 	{
 		Dir = System.getProperty("user.dir");
-		foldername = new File(Dir+"/files");
+		File folder_name = new File(Dir+"/files");
 		
-		if(!foldername.exists())
+		if(!folder_name.exists())
 		{
-			foldername.mkdirs();
-			System.out.println("Directory : " + foldername.getAbsolutePath());
+			folder_name.mkdirs();
+			System.out.println("Directory : " + folder_name.getAbsolutePath());
 		}
 		
 	}
 	
 	//DECLARATION OF MENUS
-	private  static final String MainMenu =
+	private static final String MainMenu =
             "\n\tMain Menu "
             + "\nSelect your option: \n"+
                     "1) List files in directory\n"+
                     "2) Add / Delete / Search\n"+
                     "3) Exit";
 
-	private  static final String SubMenu =
+	private static final String SubMenu =
             "   \nSelect any of the following: \n"+
                     "a) Add file\n"+
                     "b) Delete file\n"+
@@ -41,15 +41,15 @@ public class LockedMe_Prototype {
 	
 	
     //OPTIONS FOR PRIMARY MENU
-	void showPrimaryMenu() {
+	void MainMenu() {
         System.out.println(MainMenu);
         try{
             Scanner sc = new Scanner(System.in);
             int opt = sc.nextInt();
             switch (opt){
                 case 1 : {
-                    showFiles();
-                    showPrimaryMenu();
+                    ViewFiles();
+                    MainMenu();
                 }
                 case 2 : {
                 	SubMenu();
@@ -58,30 +58,30 @@ public class LockedMe_Prototype {
                     System.out.println("Thanks for using LockedMe.com, Have a great day!!!");
                     System.exit(0);
                 }
-                default: showPrimaryMenu();
+                default: MainMenu();
             }
         }
         catch (Exception e){
             System.out.println("Please enter 1 / 2 / 3");
-            showPrimaryMenu();
+            MainMenu();
         }
     }
     
 	
 	
-    //OPTIONS OF SUB-MENU
+    //OPTIONS FOR SUB-MENU
 	private void SubMenu() {
 		System.out.println(SubMenu);
         try{
             Scanner sc = new Scanner(System.in);
             char[] input = sc.nextLine().toLowerCase().trim().toCharArray();
-            char option = input[0];
+            char opt = input[0];
 
-            switch (option){
+            switch (opt){
                 case 'a' : {
                     System.out.print("-> Enter File Name to Add : ");
                     String filename = sc.next().trim().toLowerCase();
-                    addFile(filename);
+                    retriveFile(filename);
                     break;
                 }
                 case 'b' : {
@@ -98,7 +98,7 @@ public class LockedMe_Prototype {
                 }
                 case 'd' : {
                     System.out.println("Exit to Main Menu");
-                    showPrimaryMenu();
+                    MainMenu();
                     break;
                 }
                 default : System.out.println("Invalid selection, Please select a / b / c / d");
@@ -115,51 +115,51 @@ public class LockedMe_Prototype {
 
 /////////////////////////////////FOR SEARCHING FILES/////////////////////////////////////
 	private void searchFile(String filename) {
-        String[] list = foldername.list();
+        String[] list = folder_name.list();
         for (String file: list) {
             if (filename.equals(file)) {
-                System.out.println("Your Searched file " + filename + " exists at " + foldername);
+                System.out.println("Your Searched file " + filename + " exists at " + folder_name);
                 return;
             }
         }
-        System.out.println("File Not Found");
+        System.out.println("No such file exists");    //IN CASE OF WRONG FILE NAME
     }
 
 ////////////////////////////////////FOR DELETING FILES////////////////////////////////////
 	private void deleteFile(String filename) {
-        File filepath = new File(foldername +"/"+filename);
-        String[] list = foldername.list();
+        File filepath = new File(folder_name +"/"+filename);
+        String[] list = folder_name.list();
         for (String file: list) {
             if (filename.equals(file) && filepath.delete()) {
-                System.out.println("Your Selected File " + filename + " is deleted from " + foldername);
+                System.out.println("Your Selected File " + filename + " is deleted from " + folder_name);
                 return;
             }
         }
-        System.out.println("Deletion Failed. FILE NOT FOUND...");
+        System.out.println("Deletion Failed. FILE NOT FOUND...");   //IN CASE OF WRONG FILE NAME
     }
 
 //////////////////////////////////FOR ADDING FILES///////////////////////////////////////
-	private void addFile(String filename) throws IOException {
-        File filepath = new File(foldername +"/"+filename);
-        String[] list = foldername.list();
+	private void retriveFile(String filename) throws IOException {
+        File filepath = new File(folder_name +"/"+filename);
+        String[] list = folder_name.list();
         for (String file: list) {
             if (filename.equalsIgnoreCase(file)) {
-                System.out.println("File " + filename + " already exists at " + foldername);
+                System.out.println("File " + filename + " already exists at " + folder_name);
                 return;
             }
         }
         filepath.createNewFile();
-        System.out.println("File "+filename+" added to "+ foldername+" successfully");
+        System.out.println("File "+filename+" added to "+ folder_name+" successfully");
     }
 
 ////////////////////////////////////FOR VIEWING FILES/////////////////////////////////////
-	private void showFiles() {
-		if (foldername.list().length==0)
+	private void ViewFiles() {
+		if (folder_name.list().length==0)  //EMPTY DIRECTORY
             System.out.println("The folder is empty");
-        else {
-            String[] list = foldername.list();
-            System.out.println("The files in "+ foldername +" are :");
-            Arrays.sort(list);
+        else {                            // (!EMPTY) DIRECTORY
+            String[] list = folder_name.list();
+            System.out.println("The files in "+ folder_name +" are :");
+            Arrays.sort(list);            //SORTING THE ARRAY AS ASCENDING
             for (String str:list) {
                 System.out.println(str);
             }
@@ -172,7 +172,7 @@ public class LockedMe_Prototype {
 		System.out.println("\t\t\t\t\t\tAPPLICATION NAME : LockedMe.com");
 		System.out.println("\n\t\t\t\t\t\tDEVELOPER : Goutham Gummadipudi");
 		LockedMe_Prototype Demo = new LockedMe_Prototype();
-        Demo.showPrimaryMenu();
+        Demo.MainMenu();
 
 	}
 
@@ -181,4 +181,4 @@ public class LockedMe_Prototype {
 
 
 
-//files = demo1,demo2
+//files = demo1,demo2,test1,test2
