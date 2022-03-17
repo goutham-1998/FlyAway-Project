@@ -15,6 +15,8 @@ public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+	//When user or admin hits href = logout -> redirects to HomePage.jsp//
+	//HTTP Session handling need to be used//
 		HttpSession session=request.getSession();
 		session.setAttribute("user", null);
 		response.sendRedirect("HomePage.jsp");

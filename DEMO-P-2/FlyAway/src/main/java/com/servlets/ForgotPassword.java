@@ -19,6 +19,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		
+		//If in case Admin Forgot the password//
+		//After changing redirects to AdminPage.jsp for login//
 		try {
 			Dao dao=new Dao();
 			HttpSession session=request.getSession();

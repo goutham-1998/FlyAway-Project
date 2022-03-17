@@ -25,9 +25,14 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		try {
 			Dao dao=new Dao();
 			
+			//email and password validation for admin//
+			//if password is correct admin redirects to AdminHome.jsp//
+			
 			if(dao.checkAdmin(email,password)) {
 				response.sendRedirect("AdminHome.jsp");
 			}
+			
+			//if password is invalid, msg need to be shown as Invalid Details and admin redirects to Admin.jsp//
 			else {
 				HttpSession session=request.getSession();
 				session.setAttribute("message", "Invalid Details");

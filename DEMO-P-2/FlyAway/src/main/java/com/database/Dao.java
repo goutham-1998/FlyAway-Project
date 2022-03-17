@@ -19,10 +19,12 @@ public class Dao {
 
 	public Dao() throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		con=DriverManager.getConnection("jdbc:mysql://localhost:3306/flyaway","root","Ra@1611003010107");
-		System.out.println("connection established with database");
+		con=DriverManager.getConnection("jdbc:mysql://localhost:3306/flyaway","root","Ra@1611003010107");  //username : root , Password = Ra@1611003010107, database = flyaway
+		System.out.println("connection to database is successfull !!");
 		st=con.createStatement();
 	}
+	
+////////////////////////////////////////////Home Page Flight Search// database = flyaway, Table = flights /////////////////////////////// 
 public List<String[]> getAvailableFlights(String f, String t, String d) {
 		
 		List<String[]> flights=new ArrayList<>();
@@ -46,6 +48,8 @@ public List<String[]> getAvailableFlights(String f, String t, String d) {
 		
 		return null;
 	}
+ 
+/////////////////////////////////////Home Page user check// database = flyaway, Table = user ////////////////////////////////////// 
 
 public HashMap<String, String> checkUser(String email, String password) {
 	
@@ -68,6 +72,7 @@ public HashMap<String, String> checkUser(String email, String password) {
 	return user;
 }
 
+/////////////////////////////////////Registration of new user//Table = user/////////////////////////////////////////////////////
 public boolean insertUser(HashMap<String, String> user) {
 
 	String query="INSERT INTO user (email, password, name, phno, adno) values('"+user.get("email")+"','"+user.get("password")+"','"+user.get("name")+"','"+user.get("phno")+"','"+user.get("adno")+"')";                   
@@ -80,6 +85,8 @@ public boolean insertUser(HashMap<String, String> user) {
 	}
 	return false;
 }
+
+ ////////////////////////////////Admin Login//Table = flyaway.admin////////////////////////////////////////////////////////////
 
 public boolean checkAdmin(String email, String password) {
 	
@@ -109,17 +116,14 @@ public boolean changeAdminPassword(String email, String password) {
 }
 
 public boolean insertFlight(HashMap<String, String> flight) throws SQLException {
-	//PreparedStatement stm=con.prepareStatement("INSERT INTO 'flyaway.flights' ('name', 'from', 'to', 'date', 'time', 'price') values(?,?,?,?,?,?)");
-	//String sql="INSERT INTO flights ('name','from','to','date','time','price') values('"+flight.get("name")+"','"+flight.get("from")+"','"+flight.get("to")+"','"+flight.get("date")+"','"+flight.get("time")+"','"+flight.get("price")+"');";
+	
+////////////////////////////////////////For Inserting New Flights By The Admin/////////////////////////////////////////////////////////////////
 	String query1 = "INSERT INTO flights (name, fromf, tof, datef, timef, price) VALUES" + " ('"
 			+ StringUtil.fixSqlFieldValue(flight.get("name")) + "'," + " '" + StringUtil.fixSqlFieldValue(flight.get("from")) + "'," + " '"
 			+ StringUtil.fixSqlFieldValue(flight.get("to")) + "'," + " '" + StringUtil.fixSqlFieldValue(flight.get("date")) + "'," + " '"
 			+ StringUtil.fixSqlFieldValue(flight.get("time")) + "'," + " '" + StringUtil.fixSqlFieldValue(flight.get("price")) + "')";
-	
-	//String sql="INSERT INTO `flyaway`.`flights` (`name`, `fromf`, `tof`, `datef`, `timef`, `price`) VALUES ('indigo', 'hyd', 'viz', '2021-04-08', '10:00', '2000');";
 	System.out.println(flight.get("date"));
 	System.out.println(flight.get("time"));
-	//String query1="INSERT into flyaway.flights (name,from,to,date,time,price) values('indigo','hyd','viz','24-02-2022','10:30','2000')";
 	try {
 		//stm.execute();
 		st.execute(query1);

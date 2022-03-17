@@ -34,6 +34,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		flight.put("time", time);
 		flight.put("price", price);
 		
+		//For entering the new flight by the Admin//
+		//All are Not Null Values//
+		//After adding the flight details admin redirects to AdminHome.jsp//
+		
 		try {
 			Dao dao=new Dao();
 			HttpSession session=request.getSession();

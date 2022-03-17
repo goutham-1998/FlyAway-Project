@@ -26,6 +26,10 @@ public class FlightList extends HttpServlet {
 		
 		try {
 			Dao dao = new Dao();
+			
+			//Listing the available flights in the databse//
+			//User will be redirected to FlighList.jsp//
+			//Every detail is Not Null values//
 			List<String[]> flights=dao.getAvailableFlights(from, to, departure);			
 			HttpSession session=request.getSession();
 			session.setAttribute("flights", flights);

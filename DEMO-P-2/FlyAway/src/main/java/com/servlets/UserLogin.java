@@ -20,6 +20,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		
+		//User login validation//
+		// Valid Details -> HomePage.jsp// 
 		try {
 			Dao dao=new Dao();
 			HashMap<String,String> user=dao.checkUser(email,password);
@@ -28,6 +30,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 				session.setAttribute("user", user);
 				response.sendRedirect("HomePage.jsp");
 			}
+			
+			//if user enters incorrect credentials//
+			//user need to be redirected to UserPage.jsp//
 			else {
 				session.setAttribute("message", "Invalid Details");
 				response.sendRedirect("UserPage.jsp");

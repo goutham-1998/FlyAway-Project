@@ -23,6 +23,11 @@ public class UserRegistration extends HttpServlet {
 		String phno=request.getParameter("phno");
 		String adno=request.getParameter("adno");
 		
+		
+		//Inserting a new User into the database flyaway.user//
+		//All are Not Null values//
+		//If user leaves any blanks, message need to be shown as -> Invalid details//
+		//After entering the details successfully user need to be redirected to UserPage.jsp for login//
 		HashMap<String,String> user=new HashMap<>();
 		user.put("email", email);
 		user.put("password", password);
